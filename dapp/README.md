@@ -1,4 +1,4 @@
-//lists of all npm required
+//lists of all npm required in both dapp e CoinsTest folder
 
 npm install
 

@@ -1,0 +1,10 @@
+>$ cat .gitignore
+package*
+truffle.js
+*.png
+*.json
+node_modules
+migrations
+build
+./dapp/node_modules
+

@@ -6,3 +6,4 @@ node_modules
 ./dapp/node_modules
 ./dapp/src/abi/*
 truffle-config.js
+truffle.js

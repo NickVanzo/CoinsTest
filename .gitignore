@@ -1,6 +1,7 @@
 >$ cat .gitignore
 package*
 *.png
+truffle.js
 *.json
 node_modules
 migrations

@@ -3,7 +3,8 @@ import Web3 from 'web3';
 let web3 = new Web3(Web3.givenProvider);
 const contract = new web3.eth.Contract(CryoCoin.abi, "0x9fae9c0594b56b53cfb1a9b03b2747404840400e");
 
-export function initialiseCryoCoin() {
+export async function initialiseCryoCoin() {
+    const account = await window.ethereum.request({ method: 'eth_accounts' });
 
     let symbol, name;
 

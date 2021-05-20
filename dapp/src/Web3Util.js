@@ -14,11 +14,9 @@ const forwarderOrigin = 'http://localhost:3000';
 
 const initialize = async () => {
     const onboardButton = document.getElementById('connectButton');
-    const getAccountsButton = document.getElementById('getAccounts');
-    const getAccountsResult = document.getElementById('getAccountsResult');
 
     initialiseBubaCoins();
-    initialiseCryoCoin();    
+    initialiseCryoCoin();
 
     /**
      * @returns Check the ethereum binding on the window object to see if it's installed
@@ -70,16 +68,6 @@ const initialize = async () => {
             onboardButton.disabled = false;
         }
       };
-  
-    /**
-     * Get the accounts of the wallet
-     * We take the first address
-     * eth_accounts returns a alist of addresses owned by us
-     */
-    getAccountsButton.addEventListener('click', async () => {
-      const accounts = await window.ethereum.request({ method: 'eth_accounts' });
-      getAccountsResult.innerHTML = accounts[0] || 'Not able to get accounts';
-    });
 
     MetaMaskClientCheck();
 };

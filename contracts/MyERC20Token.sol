@@ -31,10 +31,10 @@ contract MyERC20Token is IERC20, Auth {
         Payable: it can receive ether, this function modifies the state of the EVM because it is payable. (pag. 147 ETH book)
         The inital balance is stored in a storage mapping (balances).
      */
-    constructor(address _initialAccount) payable {
-        owner = _initialAccount;
-        balances[_initialAccount] = totalSupplyToken;
-        tokenSummary = TokenSummary("BubaCoins", "BUBA", _initialAccount);
+    constructor() {
+        owner = msg.sender;
+        balances[msg.sender] = totalSupplyToken;
+        tokenSummary = TokenSummary("BubaCoins", "BUBA", msg.sender);
     }
 
     function transfer(address _to, uint256 _value) public override returns (bool)  {

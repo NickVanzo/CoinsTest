@@ -1,9 +1,9 @@
 import ReactDOM from 'react-dom';
-import { getInstanceOfContract, initialize, getNameOfToken } from './Web3Util';
+import'./Web3Util';
 import "./index.css"
 import React from 'react';
 
-function BubaCoin(props) {
+function ShowUI(props) {
     return (
         <div>
             <h1 className="title">{props.nome}</h1>
@@ -30,4 +30,4 @@ function BubaCoin(props) {
 };
     
 
-ReactDOM.render(<BubaCoin nome="BUBA"/>, document.getElementById('root'));
+ReactDOM.render(<ShowUI nome="BUBA"/>, document.getElementById('root'));

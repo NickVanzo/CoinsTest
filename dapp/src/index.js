@@ -1,20 +1,21 @@
 import ReactDOM from 'react-dom';
-import {bubaContractAbi, bubaContractAddress, cryoContractAddress, cryoContractAbi,simpContractAddress,simpContractAbi} from './constants';
+import { bubaContractAbi, bubaContractAddress, cryoContractAddress, cryoContractAbi, simpContractAddress, simpContractAbi } from './constants';
 import './constants';
 import React from 'react';
 import Contract from './Contract';
-import Header from './Header'
+import Header from './Header';
+import FormFromTransfer from './FormFromTransfer';
 
 class ButtonToToken extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      bubaContractInstance : new Contract(bubaContractAbi, bubaContractAddress),
-      cryoContractInstance :  new Contract(cryoContractAbi, cryoContractAddress),
-      simpContractInstance : new Contract(simpContractAbi, simpContractAddress)
-    }    
+      bubaContractInstance: new Contract(bubaContractAbi, bubaContractAddress),
+      cryoContractInstance: new Contract(cryoContractAbi, cryoContractAddress),
+      simpContractInstance: new Contract(simpContractAbi, simpContractAddress)
+    }
   }
-  
+
   render() {
     return (
       <div style={{ textAlign: 'center', paddingTop: '20%' }}>

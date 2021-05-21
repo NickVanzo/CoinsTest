@@ -5,16 +5,20 @@ import React from 'react';
 import Contract from './Contract';
 
 class ButtonToToken extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      bubaContractInstance : new Contract(bubaContractAbi, bubaContractAddress),
+      cryoContractInstance :  new Contract(cryoContractAbi, cryoContractAddress)
+    }    
+  }
+  
+
   render() {
-    const bubaContractInstance = new Contract(bubaContractAbi, bubaContractAddress);
-    const cryoContractInstance = new Contract(cryoContractAbi, cryoContractAddress);
-    const simpContractInstance = new Contract(simpContractAbi, simpContractAddress);
-    console.log(bubaContractInstance.getNameOfToken());
     return (
       <div style={{ textAlign: 'center', paddingTop: '20%' }}>
-        <button onClick={async () => bubaContractInstance.getNameOfToken()}>Buba</button>
-        <button onClick={async () => cryoContractInstance.getNameOfToken()}>Cryo</button>
-        <button onClick={async () => simpContractInstance.getNameOfToken()}>Simp</button>
+        <p onClick={async () => await this.state.bubaContractInstance.getNameOfToken() }>Buba</p>
+        <p onClick={async () => await this.state.cryoContractInstance.getNameOfToken()}>Cryo</p>
       </div>
     )
   }

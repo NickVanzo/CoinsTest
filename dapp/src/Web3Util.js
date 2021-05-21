@@ -8,23 +8,19 @@
 
 
 import MetaMaskOnboarding from "@metamask/onboarding";
-import { initialiseBubaCoins } from "./BubaCoin";
-import { initialiseCryoCoin } from "./CryoCoin.js"
+// import { initialiseCryoCoin } from "./CryoCoin.js"
 const forwarderOrigin = 'http://localhost:3000';
 
 const initialize = async () => {
     const onboardButton = document.getElementById('connectButton');
 
-    initialiseBubaCoins();
-    initialiseCryoCoin();
-
     /**
      * @returns Check the ethereum binding on the window object to see if it's installed
      */
-    const isMetaMaskInstalled = () => {
+    function isMetaMaskInstalled() {
         const { ethereum } = window;
         return Boolean(ethereum && ethereum.isMetaMask);
-    };
+    }
 
     //We create a new MetaMask onboarding object to use in our app
     const onboarding = new MetaMaskOnboarding({ forwarderOrigin });
@@ -33,31 +29,32 @@ const initialize = async () => {
      * Start the onboarding process.
      * The onboard process let a new user install MetaMask
      */
-    const onClickInstall = () => {
+    function onClickInstall () {
         onboardButton.innerText = 'Onboarding in progress';
         onboardButton.disabled = true;
         onboarding.startOnboarding();
-    };
+    }
+
 
     /**
      * Will open the MetaMask UI
      * You should disable this button while the request is pending!
      */
-    const onClickConnect = async () => {
+    async function onClickConnect() {
         try {
-          await window.ethereum.request({ method: 'eth_requestAccounts' });
-        } catch (error) {
-          console.error(error);
-        }
-    };
+            await window.ethereum.request({ method: 'eth_requestAccounts' });
+          } catch (error) {
+            console.error(error);
+          }
+    }
 
     /**
      * Check if MetaMask is installed. 
      * If it is not: call the install funcion
      * If it is: call the connect function
      * Disable the button, there's no need for it anymore
-     */
-    const MetaMaskClientCheck = () => {
+     */        
+    function MetaMaskClientCheck() {
         if (!isMetaMaskInstalled()) {
             onboardButton.innerText = 'Click here to install MetaMask!';
             onboardButton.onclick = onClickInstall;
@@ -67,7 +64,7 @@ const initialize = async () => {
             onboardButton.onclick = onClickConnect;
             onboardButton.disabled = false;
         }
-      };
+    }
 
     MetaMaskClientCheck();
 };

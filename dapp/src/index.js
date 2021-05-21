@@ -3,22 +3,25 @@ import {bubaContractAbi, bubaContractAddress, cryoContractAddress, cryoContractA
 import './constants';
 import React from 'react';
 import Contract from './Contract';
+import Header from './Header'
 
 class ButtonToToken extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       bubaContractInstance : new Contract(bubaContractAbi, bubaContractAddress),
-      cryoContractInstance :  new Contract(cryoContractAbi, cryoContractAddress)
+      cryoContractInstance :  new Contract(cryoContractAbi, cryoContractAddress),
+      simpContractInstance : new Contract(simpContractAbi, simpContractAddress)
     }    
   }
   
-
   render() {
     return (
       <div style={{ textAlign: 'center', paddingTop: '20%' }}>
-        <p onClick={async () => await this.state.bubaContractInstance.getNameOfToken() }>Buba</p>
-        <p onClick={async () => await this.state.cryoContractInstance.getNameOfToken()}>Cryo</p>
+        {/* <p onClick={async () => await this.state.bubaContractInstance.getNameOfToken() }>Buba</p>
+        <p onClick={async () => await this.state.cryoContractInstance.getNameOfToken()}>Cryo</p> */}
+        <Header />
+        <FormFromTransfer />
       </div>
     )
   }

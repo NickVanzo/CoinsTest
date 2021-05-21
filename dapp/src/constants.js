@@ -8,3 +8,4 @@ export const simpContractAddress = "0xf7a1B265A952Bc7b6aA5720798E21C98f53de10F";
 export const bubaContractAbi = MyERC20Token.abi;
 export const cryoContractAbi = CryoCoin.abi;
 export const simpContractAbi = SimpCoin.abi;
+

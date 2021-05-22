@@ -12,7 +12,7 @@ class ButtonToToken extends React.Component {
         {/* <p onClick={async () => await this.state.bubaContractInstance.getNameOfToken() }>Buba</p>
         <p onClick={async () => await this.state.cryoContractInstance.getNameOfToken()}>Cryo</p> */}
         <Header />
-        <button id="connectButton">Connect</button>
+        <button id="connectButton" style={{ position:"fixed", marginTop: '28em', marginLeft: '40em' }}>Connect</button>
       </div>
     )
   }

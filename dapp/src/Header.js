@@ -4,6 +4,9 @@ import FormTransfer from './FormTransfer';
 import Info from './Info';
 import FormAllowance from './FormAllowance';
 
+import TransferFrom from './TransferFrom';
+
+
 class Header extends React.Component {
     constructor(props) {
         super(props);
@@ -43,7 +46,7 @@ class Header extends React.Component {
                 break;
             case 4:
                 bodyToShow = (
-                    <h2>Hello 3</h2>
+                    <TransferFrom />
                 )
                 break;
         }

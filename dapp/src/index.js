@@ -1,11 +1,18 @@
 import ReactDOM from 'react-dom';
 import './constants';
 import React from 'react';
-import Contract from './Contract';
 import Header from './Header';
-import FormFromTransfer from './FormFromTransfer';
 
 class ButtonToToken extends React.Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      index : 0
+    }
+  }
+
+
 
   render() {
     return (
@@ -13,7 +20,6 @@ class ButtonToToken extends React.Component {
         {/* <p onClick={async () => await this.state.bubaContractInstance.getNameOfToken() }>Buba</p>
         <p onClick={async () => await this.state.cryoContractInstance.getNameOfToken()}>Cryo</p> */}
         <Header />
-        <FormFromTransfer />
       </div>
     )
   }

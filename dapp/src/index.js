@@ -2,15 +2,13 @@ import ReactDOM from 'react-dom';
 import './constants';
 import React from 'react';
 import Header from './Header';
-import Web3Util from './Web3Util';
+import './table.css'
 
 class ButtonToToken extends React.Component {
 
   render() {
     return (
-      <div style={{ textAlign: 'center', paddingTop: '20%' }}>
-        {/* <p onClick={async () => await this.state.bubaContractInstance.getNameOfToken() }>Buba</p>
-        <p onClick={async () => await this.state.cryoContractInstance.getNameOfToken()}>Cryo</p> */}
+      <div style={{ textAlign: 'center', paddingTop: '20%' }}>        
         <Header />
         <button id="connectButton" style={{ position:"fixed", marginTop: '28em', marginLeft: '40em' }}>Connect</button>
       </div>

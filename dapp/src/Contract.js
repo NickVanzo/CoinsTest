@@ -1,5 +1,4 @@
 import Web3 from 'web3';
-
 var web3 = new Web3(window.ethereum);
 
 export class Contract {
@@ -8,9 +7,12 @@ export class Contract {
       contract: new web3.eth.Contract(
         abi,
         address
-      )
+      ),
+      hash: 0,
+      receiver: null,
+      sender: null,
+      value: 0
     }
-
   }
 
   /**
@@ -44,8 +46,14 @@ export class Contract {
      * Call the transferFrom function
      */
   async transferFrom(fromAddress, toAddress, valueTransfered) {
+    this.setReceiver(toAddress);
+    this.setSender(fromAddress);
+    this.setValue(valueTransfered);
     return await this.state.contract.methods.transfer(toAddress, valueTransfered).send({
-      from : fromAddress
+      from: fromAddress
+    }).on('transactionHash', (hash) => {
+      this.setHash(hash);
+      console.log(hash);
     })
   }
 
@@ -85,6 +93,38 @@ export class Contract {
     await this.state.contract.methods.transfer(to, value).send({
       from: accounts[0],
     });
+  }
+
+  getHash() {
+    return this.state.hash;
+  }
+
+  getSender() {
+    return this.state.sender;
+  }
+
+  getReceiver() {
+    return this.state.receiver;
+  }
+
+  getValue() {
+    return this.state.value;
+  }
+
+  setHash(newHash) {
+    this.state.hash = newHash;
+  }
+
+  setSender(newSender) {
+    this.state.sender = newSender;
+  }
+
+  setReceiver(newReceiver) {
+    this.state.receiver = newReceiver;
+  }
+
+  setValue(newValue) {
+    this.state.value = newValue;
   }
 }
 

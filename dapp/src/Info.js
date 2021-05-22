@@ -4,6 +4,7 @@ import Showcryo from './ShowCryo';
 import Showbuba from './ShowBuba';
 
 class Info extends React.Component {
+
     render() {
         return (
             <div>

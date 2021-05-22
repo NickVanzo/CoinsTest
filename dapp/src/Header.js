@@ -49,6 +49,11 @@ class Header extends React.Component {
                     <TransferFrom />
                 )
                 break;
+            default:
+                bodyToShow = (
+                    <Info />
+                )
+                break;
         }
 
         return (

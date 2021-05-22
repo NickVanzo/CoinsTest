@@ -5,15 +5,6 @@ import Header from './Header';
 
 class ButtonToToken extends React.Component {
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      index : 0
-    }
-  }
-
-
-
   render() {
     return (
       <div style={{ textAlign: 'center', paddingTop: '20%' }}>

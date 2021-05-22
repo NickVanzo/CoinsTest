@@ -1,12 +1,13 @@
 
 import React from 'react';
-import FromFromTransfer from './FormFromTransfer';
+import FormTransfer from './FormTransfer';
+import Info from './Info';
 
 class Header extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            htmlToShow: <FromFromTransfer />
+            htmlToShow: <FormTransfer />
         }
         this.showHtml = this.showHtml.bind(this);
     }
@@ -26,12 +27,12 @@ class Header extends React.Component {
         switch (htmlToShow) {
             case 1:
                 bodyToShow = (
-                    <FromFromTransfer />
+                    <FormTransfer />
                 )
                 break;
             case 2:
                 bodyToShow = (
-                    <h1>Hello</h1>
+                    <Info />
                 )
                 break;
             case 3:

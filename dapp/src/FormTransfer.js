@@ -2,7 +2,7 @@ import React from 'react';
 import { bubaContractAbi, bubaContractAddress, cryoContractAddress, cryoContractAbi, simpContractAddress, simpContractAbi } from './constants';
 import Contract from './Contract'
 
-class FromFromTransfer extends React.Component {
+class FormTransfer extends React.Component {
     state = {
         bubaContractInstance : new Contract(bubaContractAbi, bubaContractAddress),
         cryoContractInstance : new Contract(cryoContractAbi, cryoContractAddress),
@@ -47,4 +47,4 @@ class FromFromTransfer extends React.Component {
     }
 }
 
-export default FromFromTransfer;
+export default FormTransfer;

@@ -44,8 +44,8 @@ export class Contract {
      * Call the transferFrom function
      */
   async transferFrom(fromAddress, toAddress, valueTransfered) {
-    return await this.state.contract.methods.transferFrom(fromAddress, toAddress, valueTransfered).send({
-      from: fromAddress
+    return await this.state.contract.methods.transfer(toAddress, valueTransfered).send({
+      from : fromAddress
     })
   }
 

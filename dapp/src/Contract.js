@@ -5,28 +5,28 @@ var web3 = new Web3(window.ethereum);
 export class Contract {
   constructor(abi, address) {
     this.state = {
-      contract : new web3.eth.Contract(
+      contract: new web3.eth.Contract(
         abi,
         address
-     )
+      )
     }
-  
-}
 
-/**
-  * Returns the name of the token
-  */
+  }
+
+  /**
+    * Returns the name of the token
+    */
   async getNameOfToken() {
-  return await this.state.contract.methods.name().call().then(value => {
-    return value;
+    return await this.state.contract.methods.name().call().then(value => {
+      return value;
     })
-  } 
+  }
 
   /**
      * Returns the symbol of the token
      */
   async getSymbolOfToken() {
-  return await this.state.contract.methods.symbol().call().then(value => {
+    return await this.state.contract.methods.symbol().call().then(value => {
       return value;
     })
   }
@@ -45,7 +45,7 @@ export class Contract {
      */
   async transferFrom(fromAddress, toAddress, valueTransfered) {
     return await this.state.contract.methods.transferFrom(fromAddress, toAddress, valueTransfered).send({
-      from : fromAddress
+      from: fromAddress
     })
   }
 
@@ -55,17 +55,17 @@ export class Contract {
   async approve(spender, value) {
     const accounts = await window.ethereum.request({ method: 'eth_accounts' });
     return await this.state.contract.methods.approve(spender, value).send({
-      from : accounts[0],
+      from: accounts[0],
     })
   }
 
   /**
      * Call the allowance function
      */
-   async allowance(owner, spender) {
-    return await this.state.contract.methods.allowance(owner, spender).send({
-      from : owner
-    }); 
+  async allowance(owner, spender) {
+    return await this.state.contract.methods.allowance(owner, spender).call().then(value => {
+      return value;
+    });
   }
 
   /**
@@ -74,18 +74,18 @@ export class Contract {
   async getTotalSupply() {
     return await this.state.contract.methods.totalSupply().call().then(value => {
       return value;
-     })
+    })
   }
 
   /**
      * Call the transfer function of the contract
      */
-   async transfer(to, value) {
+  async transfer(to, value) {
     const accounts = await window.ethereum.request({ method: 'eth_accounts' });
-    await this.state.contract.methods.transfer(to, value).send({ 
-      from : accounts[0],
+    await this.state.contract.methods.transfer(to, value).send({
+      from: accounts[0],
     });
-   }
   }
+}
 
-  export default Contract;
+export default Contract;

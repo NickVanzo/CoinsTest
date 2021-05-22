@@ -2,6 +2,7 @@
 import React from 'react';
 import FormTransfer from './FormTransfer';
 import Info from './Info';
+import FormAllowance from './FormAllowance';
 
 class Header extends React.Component {
     constructor(props) {
@@ -37,7 +38,7 @@ class Header extends React.Component {
                 break;
             case 3:
                 bodyToShow = (
-                    <p>Hello 2</p>
+                    <FormAllowance />
                 )
                 break;
             case 4:

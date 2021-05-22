@@ -29,7 +29,7 @@ const initialize = async () => {
      * Start the onboarding process.
      * The onboard process let a new user install MetaMask
      */
-    function onClickInstall () {
+    function onClickInstall() {
         onboardButton.innerText = 'Onboarding in progress';
         onboardButton.disabled = true;
         onboarding.startOnboarding();
@@ -43,9 +43,10 @@ const initialize = async () => {
     async function onClickConnect() {
         try {
             await window.ethereum.request({ method: 'eth_requestAccounts' });
-          } catch (error) {
+            onboardButton.style.display = "none";
+        } catch (error) {
             console.error(error);
-          }
+        }
     }
 
     /**
@@ -53,7 +54,7 @@ const initialize = async () => {
      * If it is not: call the install funcion
      * If it is: call the connect function
      * Disable the button, there's no need for it anymore
-     */        
+     */
     function MetaMaskClientCheck() {
         if (!isMetaMaskInstalled()) {
             onboardButton.innerText = 'Click here to install MetaMask!';

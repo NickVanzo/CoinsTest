@@ -2,6 +2,7 @@ import ReactDOM from 'react-dom';
 import './constants';
 import React from 'react';
 import Header from './Header';
+import Web3Util from './Web3Util';
 
 class ButtonToToken extends React.Component {
 
@@ -11,6 +12,7 @@ class ButtonToToken extends React.Component {
         {/* <p onClick={async () => await this.state.bubaContractInstance.getNameOfToken() }>Buba</p>
         <p onClick={async () => await this.state.cryoContractInstance.getNameOfToken()}>Cryo</p> */}
         <Header />
+        <button id="connectButton">Connect</button>
       </div>
     )
   }

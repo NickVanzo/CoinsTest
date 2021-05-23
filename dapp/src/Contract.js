@@ -19,80 +19,111 @@ export class Contract {
     * Returns the name of the token
     */
   async getNameOfToken() {
-    return await this.state.contract.methods.name().call().then(value => {
-      return value;
-    })
+    try {
+      return await this.state.contract.methods.name().call().then(value => {
+        return value;
+      })
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   /**
      * Returns the symbol of the token
      */
   async getSymbolOfToken() {
-    return await this.state.contract.methods.symbol().call().then(value => {
-      return value;
-    })
+    try {
+      return await this.state.contract.methods.symbol().call().then(value => {
+        return value;
+      })
+    } catch(error) {
+      console.log(error);
+    }
   }
 
   /**
      * Call the balanceOf function
      */
   async getBalanceOf(address) {
-    return await this.state.contract.methods.balanceOf(address).call().then(value => {
-      return value;
-    })
+    try {
+      return await this.state.contract.methods.balanceOf(address).call().then(value => {
+        return value;
+      })
+    } catch(error) {
+      console.log(error);
+    }
   }
 
   /**
      * Call the transferFrom function
      */
   async transferFrom(fromAddress, toAddress, valueTransfered) {
-    this.setReceiver(toAddress);
-    this.setSender(fromAddress);
-    this.setValue(valueTransfered);
-    return await this.state.contract.methods.transfer(toAddress, valueTransfered).send({
-      from: fromAddress
-    }).on('transactionHash', (hash) => {
-      this.setHash(hash);
-      console.log(hash);
-    })
+    try {
+      this.setReceiver(toAddress);
+      this.setSender(fromAddress);
+      this.setValue(valueTransfered);
+      return await this.state.contract.methods.transfer(toAddress, valueTransfered).send({
+        from: fromAddress
+      }).on('transactionHash', (hash) => {
+        this.setHash(hash);
+      })
+    } catch(errors) {
+      console.log(errors);
+    }
   }
 
   /**
    * Call the approve function
    */
   async approve(spender, value) {
-    const accounts = await window.ethereum.request({ method: 'eth_accounts' });
-    return await this.state.contract.methods.approve(spender, value).send({
-      from: accounts[0],
-    })
+    try {
+      const accounts = await window.ethereum.request({ method: 'eth_accounts' });
+      return await this.state.contract.methods.approve(spender, value).send({
+        from: accounts[0],
+      })
+    } catch(errors) {
+      console.log(errors);
+    }
   }
 
   /**
      * Call the allowance function
      */
   async allowance(owner, spender) {
-    return await this.state.contract.methods.allowance(owner, spender).call().then(value => {
-      return value;
-    });
+    try {
+      return await this.state.contract.methods.allowance(owner, spender).call().then(value => {
+        return value;
+      });
+    } catch(errors) {
+      console.log(errors);
+    }
   }
 
   /**
    * Call the totalSupply function of the contract
    */
   async getTotalSupply() {
-    return await this.state.contract.methods.totalSupply().call().then(value => {
-      return value;
-    })
+    try {
+      return await this.state.contract.methods.totalSupply().call().then(value => {
+        return value;
+      })
+    } catch(error) {
+      console.log(error);
+    }
   }
 
   /**
      * Call the transfer function of the contract
      */
   async transfer(to, value) {
-    const accounts = await window.ethereum.request({ method: 'eth_accounts' });
-    await this.state.contract.methods.transfer(to, value).send({
-      from: accounts[0],
-    });
+    try {
+      const accounts = await window.ethereum.request({ method: 'eth_accounts' });
+      await this.state.contract.methods.transfer(to, value).send({
+        from: accounts[0],
+      });
+    } catch(error) {
+      console.log(error);
+    }
   }
 
   getHash() {

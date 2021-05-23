@@ -36,7 +36,7 @@ export class Contract {
       return await this.state.contract.methods.symbol().call().then(value => {
         return value;
       })
-    } catch(error) {
+    } catch (error) {
       console.log(error);
     }
   }
@@ -49,7 +49,7 @@ export class Contract {
       return await this.state.contract.methods.balanceOf(address).call().then(value => {
         return value;
       })
-    } catch(error) {
+    } catch (error) {
       console.log(error);
     }
   }
@@ -67,7 +67,7 @@ export class Contract {
       }).on('transactionHash', (hash) => {
         this.setHash(hash);
       })
-    } catch(errors) {
+    } catch (errors) {
       console.log(errors);
     }
   }
@@ -81,7 +81,7 @@ export class Contract {
       return await this.state.contract.methods.approve(spender, value).send({
         from: accounts[0],
       })
-    } catch(errors) {
+    } catch (errors) {
       console.log(errors);
     }
   }
@@ -94,7 +94,7 @@ export class Contract {
       return await this.state.contract.methods.allowance(owner, spender).call().then(value => {
         return value;
       });
-    } catch(errors) {
+    } catch (errors) {
       console.log(errors);
     }
   }
@@ -107,7 +107,7 @@ export class Contract {
       return await this.state.contract.methods.totalSupply().call().then(value => {
         return value;
       })
-    } catch(error) {
+    } catch (error) {
       console.log(error);
     }
   }
@@ -120,8 +120,10 @@ export class Contract {
       const accounts = await window.ethereum.request({ method: 'eth_accounts' });
       await this.state.contract.methods.transfer(to, value).send({
         from: accounts[0],
+      }).on('transactionHash', (hash) => {
+        this.setHash(hash);
       });
-    } catch(error) {
+    } catch (error) {
       console.log(error);
     }
   }

@@ -3,18 +3,20 @@ import { bubaContractAbi, bubaContractAddress, cryoContractAddress, cryoContract
 import Contract from './Contract'
 
 class FormAllowance extends React.Component {
-    state = {
-        bubaContractInstance: new Contract(bubaContractAbi, bubaContractAddress),
-        cryoContractInstance: new Contract(cryoContractAbi, cryoContractAddress),
-        simpContractInstance: new Contract(simpContractAbi, simpContractAddress)
-    }
+    
 
     constructor(props) {
         super(props);
         this.allowanceButtonBuba = this.allowanceButtonBuba.bind(this);
         this.allowanceButtonCryo = this.allowanceButtonCryo.bind(this);
         this.allowanceButtonSimp = this.allowanceButtonSimp.bind(this);
-    }
+        this.state = {
+                bubaContractInstance: new Contract(bubaContractAbi, bubaContractAddress),
+                cryoContractInstance: new Contract(cryoContractAbi, cryoContractAddress),
+                simpContractInstance: new Contract(simpContractAbi, simpContractAddress)
+            }
+        }
+    
 
     async allowanceButtonBuba() {
         const owner = document.getElementById('addressOwner').value;

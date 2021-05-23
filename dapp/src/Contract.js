@@ -1,3 +1,8 @@
+/**
+ * Copyright © MIT
+ */
+
+
 import Web3 from 'web3';
 var web3 = new Web3(window.ethereum);
 
@@ -9,8 +14,8 @@ export class Contract {
         address
       ),
       hash: 0,
-      receiver: null,
       sender: null,
+      receiver: null,
       value: 0
     }
   }

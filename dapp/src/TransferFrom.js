@@ -2,8 +2,6 @@ import React from 'react';
 import { bubaContractAbi, bubaContractAddress, cryoContractAddress, cryoContractAbi, simpContractAddress, simpContractAbi } from './constants';
 import Contract from './Contract'
 
-
-
 class TransferFrom extends React.Component {
 
     constructor(props) {
@@ -18,8 +16,6 @@ class TransferFrom extends React.Component {
             simpContractInstance: new Contract(simpContractAbi, simpContractAddress),
         }
     }
-
-    
 
     async transferFromButtonBuba() {
         const value = document.getElementById('amount').value;
@@ -56,8 +52,6 @@ class TransferFrom extends React.Component {
         cell3.innerHTML = to;
         cell4.innerHTML = value;
     }
-
-
 
     render() {
         return (

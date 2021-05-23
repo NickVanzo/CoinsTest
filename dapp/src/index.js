@@ -3,6 +3,7 @@ import './constants';
 import React from 'react';
 import Header from './Header';
 import './table.css'
+import WebUtil from './Web3Util';
 
 class ButtonToToken extends React.Component {
 

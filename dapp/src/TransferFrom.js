@@ -17,63 +17,83 @@ class TransferFrom extends React.Component {
         }
     }
 
+    componentDidMount() {
+        /**
+         * Load the last event emitted for each coin
+         */
+        var i = 0;
+        this.state.bubaContractInstance.getEvents().then(value => {
+            i = 0;
+            while(i < value.length) {
+                this.addRowTable(value[i].returnValues[0], value[i].returnValues[1], value[i].returnValues[2]);
+                i++;
+            }
+        })
+    }
+
     async transferFromButtonBuba() {
         const value = document.getElementById('amount').value;
         const fromAddress = document.getElementById('fromAddress').value;
         const toAddress = document.getElementById('toAddress').value;
         await this.state.bubaContractInstance.transferFrom(fromAddress, toAddress, value).then(() => {
-            this.addRowTable(this.state.bubaContractInstance.getHash(), fromAddress, toAddress, value);
+            this.state.bubaContractInstance.getEvents().then(value => {
+                this.addRowTable(value[value.length-1].returnValues[0], value[value.length-1].returnValues[1], value[value.length-1].returnValues[2]); 
+            })
         })
+        
     };
     async transferFromButtonCryo() {
         const value = document.getElementById('amount').value;
         const fromAddress = document.getElementById('fromAddress').value;
         const toAddress = document.getElementById('toAddress').value;
         await this.state.cryoContractInstance.transferFrom(fromAddress, toAddress, value);
-        this.addRowTable(this.state.cryoContractInstance.getHash(), fromAddress, toAddress, value);
+        this.state.cryoContractInstance.getEvents().then(value => {
+            this.addRowTable(value[value.length-1].returnValues[0], value[value.length-1].returnValues[1], value[value.length-1].returnValues[2]); 
+        })
     }
     async transferFromButtonSimp() {
         const value = document.getElementById('amount').value;
         const fromAddress = document.getElementById('fromAddress').value;
         const toAddress = document.getElementById('toAddress').value;
         await this.state.simpContractInstance.transferFrom(fromAddress, toAddress, value);
-        this.addRowTable(this.state.simpContractInstance.getHash(), fromAddress, toAddress, value);
+        this.state.simpContractInstance.getEvents().then(value => {
+            this.addRowTable(value[value.length-1].returnValues[0], value[value.length-1].returnValues[1], value[value.length-1].returnValues[2]); 
+        })
     }
 
-    addRowTable(hash, from, to, value) {
+    addRowTable(from, to, value) {
         const myTable = document.getElementById('tableBody');
         var row = myTable.insertRow(0);
         var cell1 = row.insertCell(0);
         var cell2 = row.insertCell(1);
         var cell3 = row.insertCell(2);
-        var cell4 = row.insertCell(3);
-        cell1.innerHTML = hash;
-        cell2.innerHTML = from;
-        cell3.innerHTML = to;
-        cell4.innerHTML = value;
+        cell1.innerHTML = from;
+        cell2.innerHTML = to;
+        cell3.innerHTML = value;
     }
 
     render() {
         return (
-            <div>
+            <div >
                 <p><input id="fromAddress" className="w3-input w3-padding-16 w3-border" type="text" placeholder="fromAddress" required name="fromAddress" /></p>
                 <p><input id="toAddress" className="w3-input w3-padding-16 w3-border" type="text" placeholder="toAddress" required name="toAddress" /></p>
                 <p><input id="amount" className="w3-input w3-padding-16 w3-border" type="number" placeholder="Number of token" required name="amountToken" /></p>
                 <p><button style={{ position: 'relative', left: '40%' }} id="buttonTransferFrom" className="w3-button w3-black" type="submit" onClick={this.transferFromButtonBuba}>TRANSFER  BUBA</button></p>
                 <p><button style={{ position: 'relative', left: '40%' }} id="buttonTransferFrom" className="w3-button w3-black" type="submit" onClick={this.transferFromButtonCryo}>TRANSFER  CRYO</button></p>
                 <p><button style={{ position: 'relative', left: '40%' }} id="buttonTransferFrom" className="w3-button w3-black" type="submit" onClick={this.transferFromButtonSimp}>TRANSFER  SIMP</button></p>
+                <div style={{overflowY: 'auto', position: 'fixed', top: '35%', left: '10%'}}>
                 <table>
                     <thead>
                         <tr>
-                            <th>Hash</th>
-                            <th>Sender</th>
-                            <th>Receiver</th>
+                            <th>From</th>
+                            <th>To</th>
                             <th>Value</th>
                         </tr>
                     </thead>
                     <tbody id="tableBody">
                     </tbody>
                 </table>
+                </div>
             </div>
         )
     }

@@ -2,7 +2,6 @@
  * Copyright © MIT
  */
 
-
 import Web3 from 'web3';
 var web3 = new Web3(window.ethereum);
 
@@ -16,7 +15,25 @@ export class Contract {
       hash: 0,
       sender: null,
       receiver: null,
-      value: 0
+      value: 0,
+    }
+  }
+
+  async getEvents() {
+    try {
+      return await this.state.contract.getPastEvents('allEvents', {
+        fromBlock: 0,
+        toBlock: 'latest'
+      }, (err, event) => {
+        if(!err) {
+          console.log(event);
+          return event;
+        } else {
+          console.log(err);
+        }
+      })
+    } catch(error) {
+      console.log(error);
     }
   }
 

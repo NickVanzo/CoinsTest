@@ -6,7 +6,6 @@
  * but I could't figure out how to make it work, for more info go to this link:https://docs.metamask.io/guide/provider-migration.html#replacing-window-web3
  */
 
-
 import MetaMaskOnboarding from "@metamask/onboarding";
 // import { initialiseCryoCoin } from "./CryoCoin.js"
 const forwarderOrigin = 'http://localhost:3000';
@@ -66,7 +65,7 @@ const initialize = async () => {
             onboardButton.disabled = false;
         }
     }
-
+    
     MetaMaskClientCheck();
 };
 

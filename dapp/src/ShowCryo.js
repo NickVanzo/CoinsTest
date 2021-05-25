@@ -7,10 +7,6 @@ class Showcryo extends React.Component {
         cryoContractInstance: new Contract(cryoContractAbi, cryoContractAddress),
     }
 
-    constructor(props) {
-        super(props);
-    }
-
     async componentDidMount() {
         var nameOfToken = document.getElementById('showNameOfCryo');
         var maxNumToken = document.getElementById('showMaxQntCryo');

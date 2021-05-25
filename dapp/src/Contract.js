@@ -22,11 +22,10 @@ export class Contract {
   async getEvents() {
     try {
       return await this.state.contract.getPastEvents('allEvents', {
-        fromBlock: 0,
+        fromBlock: 60,
         toBlock: 'latest'
       }, (err, event) => {
         if(!err) {
-          console.log(event);
           return event;
         } else {
           console.log(err);
@@ -46,7 +45,6 @@ export class Contract {
         return value;
       })
     } catch (error) {
-      console.log(error);
     }
   }
 

@@ -1,6 +1,10 @@
 import React from 'react';
 import { bubaContractAbi, bubaContractAddress, cryoContractAddress, cryoContractAbi, simpContractAddress, simpContractAbi } from './constants';
 import Contract from './Contract'
+import 'firebase/firestore'
+import { dbReference } from './Firestore'
+import { doc, setDoc, query, collection, where, getDocs } from 'firebase/firestore'
+
 
 class FormTransfer extends React.Component {
 
@@ -17,14 +21,13 @@ class FormTransfer extends React.Component {
         }
     }
 
-    componentDidMount() {
-        var i = 0;
-        this.state.bubaContractInstance.getEvents().then(value => {
-            i = 0;
-            while(i < value.length) {
-                this.addRowTable(value[i].returnValues[0], value[i].returnValues[1], value[i].returnValues[2]);
-                i++;
-            }
+    async componentDidMount() {
+        const q = query(collection(dbReference, "transferFrom"),
+            where("value", ">", "0")
+        );
+        const querySnapshot = await getDocs(q);
+        querySnapshot.forEach((doc) => {
+            this.addRowTable(doc.data().from, doc.data().to, doc.data().value);
         })
     }
 
@@ -75,7 +78,7 @@ class FormTransfer extends React.Component {
                 <p><button id="buttonTransfer" className="w3-button w3-black" type="submit" onClick={this.transferButtonBuba}>TRANSFER BUBA</button></p>
                 <p><button id="buttonTransfer" className="w3-button w3-black" type="submit" onClick={this.transferButtonCryo}>TRANSFER CRYO</button></p>
                 <p><button id="buttonTransfer" className="w3-button w3-black" type="submit" onClick={this.transferButtonSimp}>TRANSFER SIMP</button></p>
-                <div style={{position: 'fixed', top: '50%', left: '20%'}}>
+                <div style={{ position: 'fixed', top: '50%', left: '20%' }}>
                     <table>
                         <thead>
                             <tr>

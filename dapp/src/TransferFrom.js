@@ -1,6 +1,10 @@
 import React from 'react';
 import { bubaContractAbi, bubaContractAddress, cryoContractAddress, cryoContractAbi, simpContractAddress, simpContractAbi } from './constants';
 import Contract from './Contract'
+import 'firebase/firestore'
+import { dbReference } from './Firestore'
+import { doc, setDoc, query, collection, where, getDocs } from 'firebase/firestore'
+
 
 class TransferFrom extends React.Component {
 
@@ -17,17 +21,15 @@ class TransferFrom extends React.Component {
         }
     }
 
-    componentDidMount() {
-        /**
-         * Load the last event emitted for each coin
-         */
+    async componentDidMount() {
         var i = 0;
-        this.state.bubaContractInstance.getEvents().then(value => {
-            i = 0;
-            while(i < value.length) {
-                this.addRowTable(value[i].returnValues[0], value[i].returnValues[1], value[i].returnValues[2]);
-                i++;
-            }
+        const q = query(collection(dbReference, "transferFrom"),
+            where("value", ">", "0")
+        );
+        const querySnapshot = await getDocs(q);
+        querySnapshot.forEach((doc) => {
+            console.log(doc.id, '=>', doc.data());
+            this.addRowTable(doc.data().from, doc.data().to, doc.data().value);
         })
     }
 
@@ -36,19 +38,28 @@ class TransferFrom extends React.Component {
         const fromAddress = document.getElementById('fromAddress').value;
         const toAddress = document.getElementById('toAddress').value;
         await this.state.bubaContractInstance.transferFrom(fromAddress, toAddress, value).then(() => {
-            this.state.bubaContractInstance.getEvents().then(value => {
-                this.addRowTable(value[value.length-1].returnValues[0], value[value.length-1].returnValues[1], value[value.length-1].returnValues[2]); 
+            this.state.bubaContractInstance.getEvents().then(async value => {
+                this.addRowTable(value[value.length - 1].returnValues[0], value[value.length - 1].returnValues[1], value[value.length - 1].returnValues[2]);
+                await setDoc(doc(dbReference, "transferFrom", this.state.bubaContractInstance.getHash()), {
+                    from: value[value.length - 1].returnValues[0],
+                    to: value[value.length - 1].returnValues[1],
+                    value: value[value.length - 1].returnValues[2]
+                })
             })
         })
-        
     };
     async transferFromButtonCryo() {
         const value = document.getElementById('amount').value;
         const fromAddress = document.getElementById('fromAddress').value;
         const toAddress = document.getElementById('toAddress').value;
         await this.state.cryoContractInstance.transferFrom(fromAddress, toAddress, value);
-        this.state.cryoContractInstance.getEvents().then(value => {
-            this.addRowTable(value[value.length-1].returnValues[0], value[value.length-1].returnValues[1], value[value.length-1].returnValues[2]); 
+        this.state.cryoContractInstance.getEvents().then(async value => {
+            this.addRowTable(value[value.length - 1].returnValues[0], value[value.length - 1].returnValues[1], value[value.length - 1].returnValues[2]);
+            await setDoc(doc(dbReference, "transferFrom", this.state.cryoContractInstance.getHash(), {
+                from: value[value.length - 1].returnValues[0],
+                to: value[value.length - 1].returnValues[1],
+                value: value[value.length - 1].returnValues[2]
+            }))
         })
     }
     async transferFromButtonSimp() {
@@ -56,8 +67,13 @@ class TransferFrom extends React.Component {
         const fromAddress = document.getElementById('fromAddress').value;
         const toAddress = document.getElementById('toAddress').value;
         await this.state.simpContractInstance.transferFrom(fromAddress, toAddress, value);
-        this.state.simpContractInstance.getEvents().then(value => {
-            this.addRowTable(value[value.length-1].returnValues[0], value[value.length-1].returnValues[1], value[value.length-1].returnValues[2]); 
+        this.state.simpContractInstance.getEvents().then(async value => {
+            this.addRowTable(value[value.length - 1].returnValues[0], value[value.length - 1].returnValues[1], value[value.length - 1].returnValues[2]);
+            await setDoc(doc(dbReference, "transferFrom", this.state.simpContractInstance.getHash(), {
+                from: value[value.length - 1].returnValues[0],
+                to: value[value.length - 1].returnValues[1],
+                value: value[value.length - 1].returnValues[2]
+            }))
         })
     }
 
@@ -81,18 +97,18 @@ class TransferFrom extends React.Component {
                 <p><button style={{ position: 'relative', left: '40%' }} id="buttonTransferFrom" className="w3-button w3-black" type="submit" onClick={this.transferFromButtonBuba}>TRANSFER  BUBA</button></p>
                 <p><button style={{ position: 'relative', left: '40%' }} id="buttonTransferFrom" className="w3-button w3-black" type="submit" onClick={this.transferFromButtonCryo}>TRANSFER  CRYO</button></p>
                 <p><button style={{ position: 'relative', left: '40%' }} id="buttonTransferFrom" className="w3-button w3-black" type="submit" onClick={this.transferFromButtonSimp}>TRANSFER  SIMP</button></p>
-                <div style={{overflowY: 'auto', position: 'fixed', top: '35%', left: '10%'}}>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>From</th>
-                            <th>To</th>
-                            <th>Value</th>
-                        </tr>
-                    </thead>
-                    <tbody id="tableBody">
-                    </tbody>
-                </table>
+                <div style={{ overflowY: 'auto', position: 'fixed', top: '35%', left: '10%' }}>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>From</th>
+                                <th>To</th>
+                                <th>Value</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tableBody">
+                        </tbody>
+                    </table>
                 </div>
             </div>
         )

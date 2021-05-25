@@ -7,10 +7,6 @@ class Showsimp extends React.Component {
         simpContractInstance: new Contract(simpContractAbi, simpContractAddress),
     }
 
-    constructor(props) {
-        super(props);
-    }
-
     async componentDidMount() {
         var nameOfToken = document.getElementById('showNameOfSimp');
         var maxNumToken = document.getElementById('showMaxQntSimp');

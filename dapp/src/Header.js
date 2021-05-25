@@ -60,16 +60,16 @@ class Header extends React.Component {
             <div className="w3-top">
                 <div className="w3-row w3-padding w3-black">
                     <div className="w3-col s3">
-                        <a href="#" className="w3-button w3-block w3-black" onClick={() => this.showHtml(1)}>SEND</a>
+                        <button className="w3-button w3-block w3-black" onClick={() => this.showHtml(1)}>SEND</button>
                     </div>
                     <div className="w3-col s3">
-                        <a href="#about" className="w3-button w3-block w3-black" onClick={() => this.showHtml(2)}>GET INFO</a>
+                        <button className="w3-button w3-block w3-black" onClick={() => this.showHtml(2)}>GET INFO</button>
                     </div>
                     <div className="w3-col s3">
-                        <a href="#menu" className="w3-button w3-block w3-black" onClick={() => this.showHtml(3)}>ALLOW</a>
+                        <button className="w3-button w3-block w3-black" onClick={() => this.showHtml(3)}>ALLOW</button>
                     </div>
                     <div className="w3-col s3">
-                        <a href="#where" className="w3-button w3-block w3-black" onClick={() => this.showHtml(4)}>TRANSFER FROM</a>
+                        <button className="w3-button w3-block w3-black" onClick={() => this.showHtml(4)}>TRANSFER FROM</button>
                     </div>
                 </div>
                 {bodyToShow}

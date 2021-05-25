@@ -3,7 +3,7 @@ import { bubaContractAbi, bubaContractAddress, cryoContractAddress, cryoContract
 import Contract from './Contract'
 
 class FormAllowance extends React.Component {
-    
+
 
     constructor(props) {
         super(props);
@@ -11,12 +11,11 @@ class FormAllowance extends React.Component {
         this.allowanceButtonCryo = this.allowanceButtonCryo.bind(this);
         this.allowanceButtonSimp = this.allowanceButtonSimp.bind(this);
         this.state = {
-                bubaContractInstance: new Contract(bubaContractAbi, bubaContractAddress),
-                cryoContractInstance: new Contract(cryoContractAbi, cryoContractAddress),
-                simpContractInstance: new Contract(simpContractAbi, simpContractAddress)
-            }
+            bubaContractInstance: new Contract(bubaContractAbi, bubaContractAddress),
+            cryoContractInstance: new Contract(cryoContractAbi, cryoContractAddress),
+            simpContractInstance: new Contract(simpContractAbi, simpContractAddress),
         }
-    
+    }
 
     async allowanceButtonBuba() {
         const owner = document.getElementById('addressOwner').value;
@@ -89,7 +88,6 @@ class FormAllowance extends React.Component {
             <div>
                 <p><input id="addressOwner" className="w3-input w3-padding-16 w3-border" type="text" placeholder="Address Owner" required /></p>
                 <p><input id="addressSpender" className="w3-input w3-padding-16 w3-border" type="text" placeholder="Address Spender" required /></p>
-                <h2 id="res"></h2>
                 <p><button id="buttonAllowanceBuba" className="w3-button w3-black" type="submit" onClick={this.allowanceButtonBuba}>SHOW BUBA</button></p>
                 <p><button id="buttonAllowanceCryo" className="w3-button w3-black" type="submit" onClick={this.allowanceButtonCryo}>SHOW CRYO</button></p>
                 <p><button id="buttonAllowanceSimp" className="w3-button w3-black" type="submit" onClick={this.allowanceButtonSimp}>SHOW SIMP</button></p>

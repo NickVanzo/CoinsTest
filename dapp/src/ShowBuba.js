@@ -8,10 +8,6 @@ class Showbuba extends React.Component {
         bubaContractInstance: new Contract(bubaContractAbi, bubaContractAddress),
     }
 
-    constructor(props) {
-        super(props);
-    }
-
     async componentDidMount() {
         var nameOfToken = document.getElementById('showNameOfBuba');
         var maxNumToken = document.getElementById('showMaxQnt');

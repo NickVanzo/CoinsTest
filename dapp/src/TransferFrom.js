@@ -17,18 +17,16 @@ class TransferFrom extends React.Component {
         this.state = {
             bubaContractInstance: new Contract(bubaContractAbi, bubaContractAddress),
             cryoContractInstance: new Contract(cryoContractAbi, cryoContractAddress),
-            simpContractInstance: new Contract(simpContractAbi, simpContractAddress),
+            simpContractInstance: new Contract(simpContractAbi, simpContractAddress)
         }
     }
 
     async componentDidMount() {
-        var i = 0;
         const q = query(collection(dbReference, "transferFrom"),
             where("value", ">", "0")
         );
         const querySnapshot = await getDocs(q);
         querySnapshot.forEach((doc) => {
-            console.log(doc.id, '=>', doc.data());
             this.addRowTable(doc.data().from, doc.data().to, doc.data().value);
         })
     }
@@ -37,23 +35,31 @@ class TransferFrom extends React.Component {
         const value = document.getElementById('amount').value;
         const fromAddress = document.getElementById('fromAddress').value;
         const toAddress = document.getElementById('toAddress').value;
-        await this.state.bubaContractInstance.transferFrom(fromAddress, toAddress, value).then(() => {
-            this.state.bubaContractInstance.getEvents().then(async value => {
-                this.addRowTable(value[value.length - 1].returnValues[0], value[value.length - 1].returnValues[1], value[value.length - 1].returnValues[2]);
-                await setDoc(doc(dbReference, "transferFrom", this.state.bubaContractInstance.getHash()), {
-                    from: value[value.length - 1].returnValues[0],
-                    to: value[value.length - 1].returnValues[1],
-                    value: value[value.length - 1].returnValues[2]
-                })
+        /**
+         * Add a new row into the table
+         */
+        await this.state.bubaContractInstance.transferFrom(fromAddress, toAddress, value).then(async () => {
+            this.addRowTable(fromAddress, toAddress, value);
+            /**
+         * Add the data into the database
+         */
+            await setDoc(doc(dbReference, "transferFrom", this.state.bubaContractInstance.getHash()), {
+                from: fromAddress,
+                to: toAddress,
+                value: value
             })
         })
+
+
     };
+
     async transferFromButtonCryo() {
         const value = document.getElementById('amount').value;
         const fromAddress = document.getElementById('fromAddress').value;
         const toAddress = document.getElementById('toAddress').value;
         await this.state.cryoContractInstance.transferFrom(fromAddress, toAddress, value);
         this.state.cryoContractInstance.getEvents().then(async value => {
+            console.log(value);
             this.addRowTable(value[value.length - 1].returnValues[0], value[value.length - 1].returnValues[1], value[value.length - 1].returnValues[2]);
             await setDoc(doc(dbReference, "transferFrom", this.state.cryoContractInstance.getHash(), {
                 from: value[value.length - 1].returnValues[0],

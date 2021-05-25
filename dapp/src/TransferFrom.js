@@ -5,7 +5,6 @@ import 'firebase/firestore'
 import { dbReference } from './Firestore'
 import { doc, setDoc, query, collection, where, getDocs } from 'firebase/firestore'
 
-
 class TransferFrom extends React.Component {
 
     constructor(props) {
@@ -21,6 +20,9 @@ class TransferFrom extends React.Component {
         }
     }
 
+    /**
+     * Fetch data from db by query
+     */
     async componentDidMount() {
         const q = query(collection(dbReference, "transferFrom"),
             where("value", ">", "0")
@@ -41,8 +43,8 @@ class TransferFrom extends React.Component {
         await this.state.bubaContractInstance.transferFrom(fromAddress, toAddress, value).then(async () => {
             this.addRowTable(fromAddress, toAddress, value);
             /**
-         * Add the data into the database
-         */
+            * Add the data into the database
+            */
             await setDoc(doc(dbReference, "transferFrom", this.state.bubaContractInstance.getHash()), {
                 from: fromAddress,
                 to: toAddress,
@@ -57,29 +59,32 @@ class TransferFrom extends React.Component {
         const value = document.getElementById('amount').value;
         const fromAddress = document.getElementById('fromAddress').value;
         const toAddress = document.getElementById('toAddress').value;
-        await this.state.cryoContractInstance.transferFrom(fromAddress, toAddress, value);
-        this.state.cryoContractInstance.getEvents().then(async value => {
-            console.log(value);
-            this.addRowTable(value[value.length - 1].returnValues[0], value[value.length - 1].returnValues[1], value[value.length - 1].returnValues[2]);
-            await setDoc(doc(dbReference, "transferFrom", this.state.cryoContractInstance.getHash(), {
-                from: value[value.length - 1].returnValues[0],
-                to: value[value.length - 1].returnValues[1],
-                value: value[value.length - 1].returnValues[2]
-            }))
+        await this.state.cryoContractInstance.transferFrom(fromAddress, toAddress, value).then(async () => {
+            this.addRowTable(fromAddress, toAddress, value);
+            /**
+            * Add the data into the database
+            */
+            await setDoc(doc(dbReference, "transferFrom", this.state.cryoContractInstance.getHash()), {
+                from: fromAddress,
+                to: toAddress,
+                value: value
+            })
         })
     }
     async transferFromButtonSimp() {
         const value = document.getElementById('amount').value;
         const fromAddress = document.getElementById('fromAddress').value;
         const toAddress = document.getElementById('toAddress').value;
-        await this.state.simpContractInstance.transferFrom(fromAddress, toAddress, value);
-        this.state.simpContractInstance.getEvents().then(async value => {
-            this.addRowTable(value[value.length - 1].returnValues[0], value[value.length - 1].returnValues[1], value[value.length - 1].returnValues[2]);
-            await setDoc(doc(dbReference, "transferFrom", this.state.simpContractInstance.getHash(), {
-                from: value[value.length - 1].returnValues[0],
-                to: value[value.length - 1].returnValues[1],
-                value: value[value.length - 1].returnValues[2]
-            }))
+        await this.state.simpContractInstance.transferFrom(fromAddress, toAddress, value).then(async () => {
+            this.addRowTable(fromAddress, toAddress, value);
+            /**
+            * Add the data into the database
+            */
+            await setDoc(doc(dbReference, "transferFrom", this.state.simpContractInstance.getHash()), {
+                from: fromAddress,
+                to: toAddress,
+                value: value
+            })
         })
     }
 

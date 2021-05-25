@@ -4,7 +4,7 @@ import Contract from './Contract'
 import 'firebase/firestore'
 import { dbReference } from './Firestore'
 import { doc, setDoc, query, collection, where, getDocs } from 'firebase/firestore'
-
+import Web3 from 'web3'
 
 class FormTransfer extends React.Component {
 
@@ -22,7 +22,7 @@ class FormTransfer extends React.Component {
     }
 
     async componentDidMount() {
-        const q = query(collection(dbReference, "transferFrom"),
+        const q = query(collection(dbReference, "transfers"),
             where("value", ">", "0")
         );
         const querySnapshot = await getDocs(q);
@@ -34,28 +34,51 @@ class FormTransfer extends React.Component {
     async transferButtonBuba() {
         const value = document.getElementById('amount').value;
         const address = document.getElementById('address').value;
-        await this.state.bubaContractInstance.transfer(address, value);
-        this.state.bubaContractInstance.getEvents().then(value => {
-            this.addRowTable(value[value.length - 1].returnValues[0], value[value.length - 1].returnValues[1], value[value.length - 1].returnValues[2]);
+        const fromAddress = await window.ethereum.request({method: 'eth_accounts'});
+        await this.state.bubaContractInstance.transfer(address, value).then(async () => {
+            this.addRowTable(fromAddress[0], address, value);
+            /**
+            * Add the data into the database
+            */
+            await setDoc(doc(dbReference, "transfers", this.state.bubaContractInstance.getHash()), {
+                from: fromAddress[0],
+                to: address,
+                value: value
+            })
         })
     }
 
     async transferButtonCryo() {
         const value = document.getElementById('amount').value;
         const address = document.getElementById('address').value;
-        await this.state.cryoContractInstance.transfer(address, value);
-        this.state.cryoContractInstance.getEvents()
-        this.state.cryoContractInstance.getEvents().then(value => {
-            this.addRowTable(value[value.length - 1].returnValues[0], value[value.length - 1].returnValues[1], value[value.length - 1].returnValues[2]);
+        const fromAddress = await Web3.ethereum.request({method: 'eth_accounts'});
+        await this.state.cryoContractInstance.transfer(address, value).then(async () => {
+            this.addRowTable(fromAddress[0], address, value);
+            /**
+            * Add the data into the database
+            */
+            await setDoc(doc(dbReference, "transfers", this.state.cryoContractInstance.getHash()), {
+                from: fromAddress[0],
+                to: address,
+                value: value
+            })
         })
     }
 
     async transferButtonSimp() {
         const value = document.getElementById('amount').value;
         const address = document.getElementById('address').value;
-        await this.state.simpContractInstance.transfer(address, value);
-        this.state.impContractInstance.getEvents().then(value => {
-            this.addRowTable(value[value.length - 1].returnValues[0], value[value.length - 1].returnValues[1], value[value.length - 1].returnValues[2]);
+        const fromAddress = await Web3.ethereum.request({method: 'eth_accounts'});
+        await this.state.simpContractInstance.transfer(address, value).then(async () => {
+            this.addRowTable(fromAddress[0], address, value);
+            /**
+            * Add the data into the database
+            */
+            await setDoc(doc(dbReference, "transfers", this.state.simpContractInstance.getHash()), {
+                from: fromAddress[0],
+                to: address,
+                value: value
+            })
         })
     }
 

@@ -51,7 +51,7 @@ class FormTransfer extends React.Component {
     async transferButtonCryo() {
         const value = document.getElementById('amount').value;
         const address = document.getElementById('address').value;
-        const fromAddress = await Web3.ethereum.request({method: 'eth_accounts'});
+        const fromAddress = await window.ethereum.request({method: 'eth_accounts'});
         await this.state.cryoContractInstance.transfer(address, value).then(async () => {
             this.addRowTable(fromAddress[0], address, value);
             /**
@@ -68,7 +68,7 @@ class FormTransfer extends React.Component {
     async transferButtonSimp() {
         const value = document.getElementById('amount').value;
         const address = document.getElementById('address').value;
-        const fromAddress = await Web3.ethereum.request({method: 'eth_accounts'});
+        const fromAddress = await window.ethereum.request({method: 'eth_accounts'});
         await this.state.simpContractInstance.transfer(address, value).then(async () => {
             this.addRowTable(fromAddress[0], address, value);
             /**

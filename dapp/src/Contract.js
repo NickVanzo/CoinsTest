@@ -26,13 +26,13 @@ export class Contract {
         toBlock: 'latest'
       }, (err, event) => {
         console.log(event);
-        if(!err) {
+        if (!err) {
           return event;
         } else {
           console.log(err);
         }
       })
-    } catch(error) {
+    } catch (error) {
       console.log(error);
     }
   }
